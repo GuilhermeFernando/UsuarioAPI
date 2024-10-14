@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "UsuarioAPI.Controller.UsuarioController",
+    "Method": "Adicionausuario",
+    "RelativePath": "{controller}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "controller",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
