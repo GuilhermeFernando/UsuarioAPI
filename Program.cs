@@ -1,16 +1,36 @@
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using UsuarioAPI.Data;
+using UsuariosApi.Data;
+using UsuariosApi.Models;
+using UsuariosApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<UsuarioDbContext>(opts => opts.UseSqlServer(builder.Configuration.GetConnectionString("UsuarioConnection")));
+
+var connString = builder.Configuration.GetConnectionString("UsuarioConnection");
+
+builder.Services.AddDbContext<UsuarioDbContext>
+    (opts =>
+    {
+        opts.UseSqlServer(connString);
+    });
+
+builder.Services
+    .AddIdentity<Usuario, IdentityRole>()
+    .AddEntityFrameworkStores<UsuarioDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<TokenService>();
 
 var app = builder.Build();
 
@@ -22,7 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

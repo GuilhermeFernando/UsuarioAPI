@@ -1,17 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UsuarioAPI.Data.Dto;
-
-public class CreateUsuarioDto 
+namespace UsuariosApi.Data.Dtos
 {
-    [Required]
-    public string Usuario { get; set; }
-
-    [Required]
-    [DataType(DataType.Password)]
-    public string Senha { get; set; }
-
-    [Required]
-    [Compare("Senha")]
-    public string ConfirmaSenha { get; set; }
+    public class CreateUsuarioDto
+    {
+        [Required]
+        public string Username { get; set; }
+        [Required]
+        public DateTime DataNascimento { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+        [Required]
+        [Compare("Password")]
+        public string RePassword { get; set; }
+    }
 }
